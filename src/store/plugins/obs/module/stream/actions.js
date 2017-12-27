@@ -42,6 +42,23 @@ function eventStreamStopped({commit}) {
 	commit('stream/set/streaming', false)
 }
 
+function eventReplayStarting({commit}) {
+	//nothing to do here, possibly used in the future
+}
+function eventReplayStarted({commit}) {
+	//nothing to do here, possibly used in the future
+}
+function eventReplayStopping({commit}) {
+	//nothing to do here, possibly used in the future
+}
+function eventReplayStopped({commit}) {
+	//nothing to do here, possibly used in the future
+}
+
+async function saveReplayBuffer({commit, getters: {client}}) {
+	await client.send({'request-type': 'SaveReplayBuffer'})
+}
+
 async function setStreaming({commit, getters: {client}}, {status}) {
 	const req = status ? 'StartStreaming' : 'StopStreaming'
 
@@ -80,7 +97,12 @@ export default {
 	'event/StreamStopped': eventStreamStopped,
 	'event/StreamStopping': eventStreamStopping,
 	'event/StreamStatus': eventStreamStatus,
+	'event/ReplayStarting' : eventReplayStarting,
+	'event/ReplayStarted' : eventReplayStarted,
+	'event/ReplayStopping' : eventReplayStopping,
+	'event/ReplayStopped' : eventReplayStopped,
 	'stream/streaming': setStreaming,
 	'stream/recording': setRecording,
+	'stream/saveReplay': saveReplayBuffer,
 	'stream/reload': streamReload
 }

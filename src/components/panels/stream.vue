@@ -15,6 +15,13 @@
 		>
 			Recording: {{ recordingText }}
 		</DangerousButton>
+		<button
+			class="is-inactive"
+			:vibrate="true"
+			@click="saveReplayBuffer()"
+		>
+			Save Replay
+		</button>
 	</panel-wrapper>
 </template>
 
@@ -41,7 +48,8 @@
 		methods: {
 			...mapActions('obs', {
 				setRecording: 'stream/recording',
-				setStreaming: 'stream/streaming'
+				setStreaming: 'stream/streaming',
+				saveReplayBuffer: 'stream/saveReplay'
 			})
 		}
 	}
