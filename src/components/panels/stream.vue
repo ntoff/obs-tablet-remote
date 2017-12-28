@@ -16,11 +16,11 @@
 			Recording: {{ recordingText }}
 		</DangerousButton>
 		<button
-			class="is-inactive"
+			:class="[replaySaving ? 'is-inactive' : 'is-error']"
 			:vibrate="true"
 			@click="saveReplayBuffer()"
 		>
-			Save Replay
+			{{ replayText }}
 		</button>
 	</panel-wrapper>
 </template>
@@ -41,9 +41,10 @@
 				recording: state => state.stream.recording,
 				recTimecode: state => state.stream.recTimecode,
 				streaming: state => state.stream.streaming,
-				streamTimecode: state => state.stream.streamTimecode
+				streamTimecode: state => state.stream.streamTimecode,
+				replaySaving: state => state.stream.replaySaving
 			}),
-			...mapGetters('obs', ['recordingText', 'streamingText'])
+			...mapGetters('obs', ['recordingText', 'streamingText', 'replayText'])
 		},
 		methods: {
 			...mapActions('obs', {

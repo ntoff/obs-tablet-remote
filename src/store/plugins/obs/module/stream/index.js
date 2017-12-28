@@ -5,6 +5,7 @@ export default {
 	state: {
 		streaming: false,
 		recording: false,
+		replaySaving: 'Save Replay',
 		bytesPerSec: 0,
 		kbitsPerSec: 0,
 		strain: 0,
@@ -34,6 +35,15 @@ export default {
 				return 'Offline'
 			}
 			return state.streaming
+		},
+		replayText(state) {
+			/*if (state.replaySaving === true) {
+				return 'Saving...'
+			}
+			if (state.replaySaving === false) {
+				return 'Error'
+			}*/
+			return state.replaySaving
 		}
 	},
 	mutations

@@ -56,7 +56,24 @@ function eventReplayStopped({commit}) {
 }
 
 async function saveReplayBuffer({commit, getters: {client}}) {
-	await client.send({'request-type': 'SaveReplayBuffer'})
+	const {
+		status,
+		error
+	} = await client.send({'request-type': 'SaveReplayBuffer'})
+	if (status != 'ok') {
+		commit('stream/set/replaySaving', 'Error: '+ error)
+
+		this.resetReplayText = setTimeout(function() {
+			commit('stream/set/replaySaving', 'Save Replay')
+		}, 4000);
+	}
+	else if (status === 'ok') {
+		commit('stream/set/replaySaving', 'Saving...')
+		
+		this.resetReplayText = setTimeout(function() {
+			commit('stream/set/replaySaving', 'Save Replay')
+		}, 3000);
+	}
 }
 
 async function setStreaming({commit, getters: {client}}, {status}) {
@@ -104,5 +121,6 @@ export default {
 	'stream/streaming': setStreaming,
 	'stream/recording': setRecording,
 	'stream/saveReplay': saveReplayBuffer,
-	'stream/reload': streamReload
+	'stream/reload': streamReload,
+	'stream/replaySaving': saveReplayBuffer
 }
