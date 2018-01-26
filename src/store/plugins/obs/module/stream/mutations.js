@@ -11,11 +11,13 @@ const setStrain = updateStateKey('strain')
 const setStreaming = updateStateKey('streaming')
 const setStreamTimecode = updateStateKey('streamTimecode')
 const setTotalStreamTime = updateStateKey('totalStreamTime')
+const setReplayRecording = updateStateKey('replayRecording')
 const saveReplayBuffer = updateStateKey('replaySaving')
 
 function streamReset(state) {
 	setStreaming(state, false)
 	setRecording(state, false)
+	setReplayRecording(state, false)
 	setBytesPerSec(state, 0)
 	setKbitsPerSec(state, 0)
 	setStrain(state, 0)
@@ -28,6 +30,7 @@ function streamReset(state) {
 function streamStatus(state, status) {
 	setStreaming(state, status.streaming)
 	setRecording(state, status.recording)
+	setReplayRecording(state, status.replayRecording)
 	setBytesPerSec(state, status['bytes-per-sec'])
 	setKbitsPerSec(state, status['kbits-per-sec'])
 	setStrain(state, status.strain)
@@ -46,5 +49,6 @@ export default {
 	'stream/set/recTimecode': setRecTimecode,
 	'stream/set/streaming': setStreaming,
 	'stream/set/streamTimecode': setStreamTimecode,
-	'stream/set/replaySaving': saveReplayBuffer
+	'stream/set/replaySaving': saveReplayBuffer,
+	'stream/set/replayRecording': setReplayRecording
 }

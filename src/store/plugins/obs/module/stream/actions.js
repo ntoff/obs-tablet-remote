@@ -43,16 +43,22 @@ function eventStreamStopped({commit}) {
 }
 
 function eventReplayStarting({commit}) {
-	//nothing to do here, possibly used in the future
+	commit('stream/set/replayRecording', 'starting')
 }
 function eventReplayStarted({commit}) {
-	//nothing to do here, possibly used in the future
+	commit('stream/set/replayRecording', true)
 }
 function eventReplayStopping({commit}) {
-	//nothing to do here, possibly used in the future
+	commit('stream/set/replayRecording', 'stopping')
 }
 function eventReplayStopped({commit}) {
-	//nothing to do here, possibly used in the future
+	commit('stream/set/replayRecording', false)
+}
+
+async function setReplayRecording({commit, getters: {client}}, {status}) {
+	const req = status ? 'StartReplayBuffer' : 'StopReplayBuffer'
+	
+	await client.send({'request-type': req})
 }
 
 async function saveReplayBuffer({commit, getters: {client}}) {
@@ -92,6 +98,7 @@ async function streamReload({commit, getters: {client}}) {
 	const {
 		streaming,
 		recording,
+		replayRecording, //placeholder variable name, currently no replay buffer status is returned via websocket
 		'stream-timecode': streamTimecode,
 		'rec-timecode': recTimecode
 	} = await client.send({'request-type': 'GetStreamingStatus'})
@@ -100,6 +107,7 @@ async function streamReload({commit, getters: {client}}) {
 	commit('stream/set/recording', recording)
 	commit('stream/set/streamTimecode', streamTimecode)
 	commit('stream/set/recTimecode', recTimecode)
+	commit('stream/set/replayRecording', replayRecording) //placeholder variable name, currently no replay buffer status is returned via websocket
 }
 
 export default {
@@ -120,7 +128,7 @@ export default {
 	'event/ReplayStopped' : eventReplayStopped,
 	'stream/streaming': setStreaming,
 	'stream/recording': setRecording,
+	'stream/replayRecording': setReplayRecording,
 	'stream/saveReplay': saveReplayBuffer,
 	'stream/reload': streamReload,
-	'stream/replaySaving': saveReplayBuffer
 }
