@@ -41,17 +41,4 @@ button {
 			background-color: darken($active-color, 6%);
 		}
 	}
-	&.is-error {
-		background-color: $error-color;
-		border-color: darken($error-color, 10%);
-		color: #000000;
-		&[disabled] {
-			$disabled-color: mix($error-color, #dddddd, 20%);
-			background-color: $disabled-color;
-			border-color: darken($disabled-color, 10%);
-		}
-		&:hover:not([disabled]) {
-			background-color: darken($error-color, 6%);
-		}
-	}
 }
