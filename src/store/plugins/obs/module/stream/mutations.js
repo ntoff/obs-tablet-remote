@@ -30,7 +30,7 @@ function streamReset(state) {
 function streamStatus(state, status) {
 	setStreaming(state, status.streaming)
 	setRecording(state, status.recording)
-	setReplayRecording(state, status.replayRecording)
+	/*setReplayRecording(state, status.replayRecording) Disable this until obs websocket returns a value otherwise it'll get reset to unknown with every refresh */
 	setBytesPerSec(state, status['bytes-per-sec'])
 	setKbitsPerSec(state, status['kbits-per-sec'])
 	setStrain(state, status.strain)

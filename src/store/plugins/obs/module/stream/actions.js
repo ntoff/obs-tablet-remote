@@ -83,14 +83,18 @@ async function saveReplayBuffer({commit, getters: {client}}) {
 }
 
 async function setStreaming({commit, getters: {client}}, {status}) {
+	const enable = status
 	const req = status ? 'StartStreaming' : 'StopStreaming'
-
+	
+	await client.send({'request-type': 'SetHeartbeat', enable}) //(en|dis)able the heartbeat
 	await client.send({'request-type': req})
 }
 
 async function setRecording({commit, getters: {client}}, {status}) {
+	const enable = status
 	const req = status ? 'StartRecording' : 'StopRecording'
-
+	
+	await client.send({'request-type': 'SetHeartbeat', enable}) //(en|dis)able the heartbeat
 	await client.send({'request-type': req})
 }
 
@@ -131,4 +135,6 @@ export default {
 	'stream/replayRecording': setReplayRecording,
 	'stream/saveReplay': saveReplayBuffer,
 	'stream/reload': streamReload,
+
+	'event/Heartbeat': eventStreamStatus // get stream status with heartbeat
 }
