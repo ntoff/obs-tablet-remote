@@ -1,9 +1,9 @@
 node_modules
 .DS_Store
-.vscode
 
 # produced by vbuild
 dist
 
 yarn-error.log
 npm-debug.log
+static/favicon.ico
