@@ -56,7 +56,7 @@ function eventReplayStopped({commit}) {
 }
 
 async function setReplayRecording({commit, getters: {client}}, {status}) {
-	const req = status ? 'StartReplayBuffer' : 'StopReplayBuffer'
+	const req = 'StartStopReplayBuffer'
 	
 	await client.send({'request-type': req})
 }
