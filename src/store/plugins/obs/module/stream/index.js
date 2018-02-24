@@ -5,7 +5,7 @@ export default {
 	state: {
 		streaming: false,
 		recording: false,
-		replayRecording: false, //placeholder variable name, currently no replay buffer status is returned via websocket
+		replaybuffer: false, //placeholder variable name, currently no replay buffer status is returned via websocket
 		replaySaving: 'Save Replay',
 		bytesPerSec: 0,
 		kbitsPerSec: 0,
@@ -42,17 +42,17 @@ export default {
 		* If the replay buffer is to be used, it must be started / stopped AFTER connecting to OBS via the remote in order to
 		* keep the button status in sync with the remote interface
 		*/
-		replayRecordingText(state) {
-			if (state.replayRecording === true) {
+		replaybufferText(state) {
+			if (state.replaybuffer === true) {
 				return 'Recording'
 			}
-			if (state.replayRecording === false) {
+			if (state.replaybuffer === false) {
 				return 'Offline'
 			}
-			if (state.replayRecording === undefined) {
+			if (state.replaybuffer === undefined) {
 				return 'Status Unknown'
 			}
-			return state.replayRecording
+			return state.replaybuffer
 		},
 		replaySavingText(state) {
 			/*nothing much happens here

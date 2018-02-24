@@ -43,19 +43,19 @@ function eventStreamStopped({commit}) {
 }
 
 function eventReplayStarting({commit}) {
-	commit('stream/set/replayRecording', 'starting')
+	commit('stream/set/replaybuffer', 'starting')
 }
 function eventReplayStarted({commit}) {
-	commit('stream/set/replayRecording', true)
+	commit('stream/set/replaybuffer', true)
 }
 function eventReplayStopping({commit}) {
-	commit('stream/set/replayRecording', 'stopping')
+	commit('stream/set/replaybuffer', 'stopping')
 }
 function eventReplayStopped({commit}) {
-	commit('stream/set/replayRecording', false)
+	commit('stream/set/replaybuffer', false)
 }
 
-async function setReplayRecording({commit, getters: {client}}, {status}) {
+async function setreplaybuffer({commit, getters: {client}}, {status}) {
 	const req = 'StartStopReplayBuffer'
 	
 	await client.send({'request-type': req})
@@ -102,7 +102,7 @@ async function streamReload({commit, getters: {client}}) {
 	const {
 		streaming,
 		recording,
-		replayRecording, //placeholder variable name, currently no replay buffer status is returned via websocket
+		replaybuffer, //placeholder variable name, currently no replay buffer status is returned via websocket
 		'stream-timecode': streamTimecode,
 		'rec-timecode': recTimecode
 	} = await client.send({'request-type': 'GetStreamingStatus'})
@@ -111,7 +111,7 @@ async function streamReload({commit, getters: {client}}) {
 	commit('stream/set/recording', recording)
 	commit('stream/set/streamTimecode', streamTimecode)
 	commit('stream/set/recTimecode', recTimecode)
-	commit('stream/set/replayRecording', replayRecording) //placeholder variable name, currently no replay buffer status is returned via websocket
+	commit('stream/set/replaybuffer', replaybuffer) //placeholder variable name, currently no replay buffer status is returned via websocket
 }
 
 export default {
@@ -132,7 +132,7 @@ export default {
 	'event/ReplayStopped' : eventReplayStopped,
 	'stream/streaming': setStreaming,
 	'stream/recording': setRecording,
-	'stream/replayRecording': setReplayRecording,
+	'stream/replaybuffer': setreplaybuffer,
 	'stream/saveReplay': saveReplayBuffer,
 	'stream/reload': streamReload,
 
