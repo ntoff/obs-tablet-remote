@@ -17,11 +17,11 @@
 		}
 
 			& > .is-active {
-				background-color: rgba(116, 219, 135, 1.0);
+				background-color: ($active-color);
 			}
 
 			& > .is-active:hover {
-				background-color: rgba(116, 219, 135, 0.5);
+				background-color: darken($active-color, 5%);
 			}
 
 			& > .is-inactive {
